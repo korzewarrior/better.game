@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Homepage</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="#home" class="btn btn-primary" style="background-color: #66CCFF;">better.game</a>
+                <a href="#faq" class="btn btn-success">faq</a>
+                <a href="#shop" class="btn btn-info" style="background-color: #FF8FE7;">shop</a>
+                <a href="#play" class="btn btn-warning">play</a>
+                <a href="#account" class="btn btn-secondary">account</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <!-- Dynamic content will be loaded here -->
+            <div id="page-content"></div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <nav class="nav" style="margin-top: 10px;">
+                <a href="#tos" class="btn" style="font-size: 0.8rem; padding: 0.35rem 0.8rem; box-shadow: 2px 2px 0 0 var(--dark); background-color: #A8B8C8; border: 3px solid var(--dark); color: white;">tos</a>
+                <a href="#eula" class="btn" style="font-size: 0.8rem; padding: 0.35rem 0.8rem; box-shadow: 2px 2px 0 0 var(--dark); background-color: #A8B8C8; border: 3px solid var(--dark); color: white;">eula</a>
+                <a href="#privacy" class="btn" style="font-size: 0.8rem; padding: 0.35rem 0.8rem; box-shadow: 2px 2px 0 0 var(--dark); background-color: #A8B8C8; border: 3px solid var(--dark); color: white;">privacy</a>
+                <a href="#copyright" class="btn" style="font-size: 0.8rem; padding: 0.35rem 0.8rem; box-shadow: 2px 2px 0 0 var(--dark); background-color: #A8B8C8; border: 3px solid var(--dark); color: white;">copyright</a>
+                <a href="#contact" class="btn" style="font-size: 0.8rem; padding: 0.35rem 0.8rem; box-shadow: 2px 2px 0 0 var(--dark); background-color: #A8B8C8; border: 3px solid var(--dark); color: white;">contact</a>
+            </nav>
+        </div>
+    </footer>
+    
+    <!-- Page Templates -->
+    <!-- Home Page Template -->
+    <template id="home-template">
+        <div class="card text-center">
+            <p class="mb-3 text-center">we fixed cheating, performance, and ping advantage in esports.</p>
+            <p class="text-center">
+                <a href="#download" class="text-link" style="color: #66CCFF;">download</a> the game. 
+                join <a href="https://better.game/discord" class="text-link">discord</a>. 
+                follow <a href="#socials" class="text-link">socials</a>. 
+                type in <a href="#chat" class="text-link">chat</a>.
+            </p>
+        </div>
+
+        <div class="main-content-card">
+            <video 
+                class="background-video" 
+                src="bg.mp4" 
+                poster="https://placehold.co/1280x720/343A40/FFFFFF?text=Loading+Earth+Video..." 
+                autoplay 
+                loop 
+                muted
+                playsinline
+                style="background-color: #343A40; cursor: pointer;"
+                id="main-video"
+                onclick="this.muted = !this.muted; this.play(); this.setAttribute('data-user-unmuted', this.muted ? 'false' : 'true');"
+            >
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    </template>
+    
+    <!-- FAQ Page Template -->
+    <template id="faq-template">
+        <div class="card">
+            <h2 class="card-header">Frequently Asked Questions</h2>
+            
+            <!-- Search Bar -->
+            <div class="faq-search-container mb-3">
+                <input type="text" id="faq-search" class="form-control" placeholder="Search questions...">
+            </div>
+            
+            <div class="faq-accordion">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Where can I download the game?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>better.game/download</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>How can I verify the download?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>The launcher and all other assets are published together with SHA256 checksums here.</p>
+                        <p>This file is signed by me, and can be verified using Linux or Windows Subsystem for Linux using this.</p>
+                        <p>The signing key is the same one I sign all my GitHub commits with.</p>
+                        <p>Signatures are verified automatically on launcher update and on fetch assets.</p>
+                        <p>To manually verify index signatures in a bash shell:</p>
+                        <ul>
+                            <li>wget http://better-game.network/asset/index.{txt,txt.sig}</li>
+                            <li>curl https://nathants.com/verify_file.sh | bash -s index.txt</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>What is the name of the game?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>better game.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>What kind of game is this?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>This is a PVP boxfighting battle royale.</p>
+                        <p>Up to 100 players share a server for 15 minutes. The last player standing wins.</p>
+                        <p>There is no ping advantage up to 60 ping, and it feels fine on 250 ping.</p>
+                        <p>The client runs at 240 FPS when all players are nearby ramp sliding.</p>
+                        <p>The server tick is 120 Hz.</p>
+                        <p>The client tick is up to 600 FPS.</p>
+                        <p>Replays are full server fidelity, and can be viewed without leaving the game.</p>
+                        <p>You always see all 100 players.</p>
+                        <p>After you are out, you can spectate the rest of the game like a ghost.</p>
+                        <p>You can spectate other games, both live and replayed.</p>
+                        <p>Cheating is nearly impossible in pubs, and actually impossible in ranked.</p>
+                        <p>Open item shop. Sell anything, customize everything. Players can see and hear different things. Everybody gets a cozy game.</p>
+                        <p>The game makes money when people play, and doesn't lose money when they don't. Fixed low operating cost means we will never shutdown. No investors means no shareholder primacy.</p>
+                        <p>We doing things better. Pull up, run the 1s.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Can I play for free?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes. There is 1 free server with 100 player capacity in each region.</p>
+                        <p>You can also play for free on any idle capacity of paid servers.</p>
+                        <p>Free players may experience long queues when many players are online.</p>
+                        <p>Playing offline is always free.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>How do I get help?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Email hi@better.game, join Discord, or type in chat.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>What is the min spec for Windows?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>GPU must exist and support Vulkan.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>What is the min spec for reboot-to-play?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>A USB 3 drive with 3GB+ is needed to boot the game.</p>
+                        <p>Ethernet always works, WiFi usually works.</p>
+                        <p>3GB VRAM and 8GB main RAM can play offline.</p>
+                        <p>4GB VRAM and 16GB main RAM can play online.</p>
+                        <p>32GB main RAM is recommended.</p>
+                        <p>64GB main RAM is ideal.</p>
+                        <p>More than 64GB main RAM is likely slower.</p>
+                        <p>GPU must exist and support Vulkan.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>How can I get more FPS on Windows?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Turn off hyperthreading in your BIOS.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>How do I install reboot-to-play?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p class="text-bold">Please note:</p>
+                        <ul>
+                            <li>All data on the flashed drive will be erased!</li>
+                            <li>Choose the USB drive carefully!</li>
+                            <li>Do not flash your C drive!</li>
+                            <li>Do not flash other data drives!</li>
+                        </ul>
+                        <p>1. Download the latest game ISO and Etcher.</p>
+                        <p>2. Watch this tutorial. Install and open Etcher then:</p>
+                        <ul>
+                            <li>On the left, click flash from file and choose the ISO.</li>
+                            <li>In the middle, choose your USB drive.</li>
+                            <li>On the right, click flash.</li>
+                        </ul>
+                        <p>3. Reboot your PC and spam F2 until BIOS comes up.</p>
+                        <p>4. Make sure SecureBoot is off in BIOS/boot. If changed, save and exit, then go back to step 3.</p>
+                        <p>5. Press F8 to get the boot disk selector.</p>
+                        <p>6. Use the arrow keys to select USB, then hit enter.</p>
+                        <p>7. You are now in the game.</p>
+                        <p>If that didn't work, check the install notes.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Install isn't working, what should I do?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Your PC might use different keys than F2, F8, and F10. It should say on screen.</p>
+                        <p>Try different USB ports. Sometimes a slow port won't flash or won't boot.</p>
+                        <p>If your boot drive selector shows multiple USB, use the first one.</p>
+                        <p>Disable fastboot in BIOS. It's in the boot section.</p>
+                        <p>Try different boot options in BIOS, UEFI vs legacy (CSM). It's in the boot section.</p>
+                        <p>Update your BIOS.</p>
+                        <p>Try using Rufus instead of Etcher to flash the ISO to USB.</p>
+                        <p>If it's still not working, ask for help.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Why do I have to turn off SecureBoot?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>The better game ISO is a modified Arch Linux ISO.</p>
+                        <p>The Arch Linux ISO requires you to turn off SecureBoot, so ours does too.</p>
+                        <p>About half of motherboards have SecureBoot on by default.</p>
+                        <p>Unless you have set up a BIOS password, SecureBoot isn't providing much benefit.</p>
+                        <p>The typical end user is not getting much value out of SecureBoot, unless you have a very unusual threat model.</p>
+                        <p>We have an open bounty for figuring out how to get SecureBoot to work with our ISO. Someday, someone will figure it out.</p>
+                        <p>Disabling SecureBoot is annoying, but necessary. We apologize. This user experience is not better.</p>
+                        <p>ATX hardware, which is your PC, can run many operating systems. Linux, BSD, Solaris, Windows, and more. Only one key ships by default with SecureBoot. Guess whose key it is? Guess why?</p>
+                        <p>Monopoly is bad. Freedom is better.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Can I run the game in a VM?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>No.</p>
+                        <p>Too much is hard coded for metal.</p>
+                        <p>A VM can easily boot to the lobby, but cannot launch the game.</p>
+                        <p>We know you won't believe us, so feel free to try, don't be shocked when the game won't launch.</p>
+                        <p>After the dev program starts, someone can fix VMs and claim a cash bounty.</p>
+                        <p>VM is not an engineering priority because it will never have good performance.</p>
+                        <p>We asked Nina if we could work on this. She said no.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Where is SecureBoot in BIOS?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>It varies by manufacturer.</p>
+                        <p>Typically either in BIOS/boot or BIOS/security.</p>
+                        <p>Sometimes in other places like Windows/weird-settings/other-weird-settings.</p>
+                        <p>Google 'MOTHERBOARD_MODEL how turn off SecureBoot'.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>How do I get back to Windows?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Press the power button, PC turns off.</p>
+                        <p>Press it again, PC turns on and boots Windows.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>How does monetization work?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>3 revenue sources: subscriptions, bus tickets, and item shop sales.</p>
+                        <p>A subscription for $5/month gets you unlimited games and priority queues.</p>
+                        <p>A bus ticket gets you a single game. This costs 1 better buck, $0.01.</p>
+                        <p>Item shop sales split revenue with 70% going to the creator.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Why subscribe?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>So you can play unlimited games and get faster queues.</p>
+                        <p>It's cheaper if you play 20+ hours per week.</p>
+                        <p>It grows the server pool.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Why do I have to reboot-to-play?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Reboot-to-play temporarily turns your PC into an arcade machine.</p>
+                        <p>The game is the OS, and all other players are running an identical setup.</p>
+                        <p>This makes a fairer, funner, faster game possible.</p>
+                        <p>There is nothing to install or configure.</p>
+                        <p>Cheating is impossible.</p>
+                        <p>The best possible performance is the default.</p>
+                        <div class="video-container">
+                            <video 
+                                src="arcade.mp4" 
+                                class="faq-video" 
+                                controls
+                                poster="https://placehold.co/640x360/343A40/FFFFFF?text=Loading+Arcade+Video..." 
+                            >
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Is reboot-to-play safe?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes. This is a modified Arch Linux ISO.</p>
+                        <p>Feel free to mount the ISO and look around before booting it.</p>
+                        <p>It includes the game launcher and removes everything else.</p>
+                        <p>It will not:</p>
+                        <ul>
+                            <li>Read or write your disks.</li>
+                            <li>Modify your PC.</li>
+                            <li>Interact with your Windows installation.</li>
+                        </ul>
+                        <p>When you are done playing, press your power button to shutdown.</p>
+                        <p>Press it again and you are back to Windows.</p>
+                        <p>Tip: Enable BitLocker in Windows to encrypt your disk. This means that unlike an EXE from Steam, reboot-to-play cannot read any of your files.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>How to install on desktop Linux?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>curl https://better-game.network/daemon > daemon</p>
+                        <p>sha256sum e4e8c63896c8e4d07e0e0f206910abfa8f26b8df3e78780f57c8af6d48cb4838</p>
+                        <p>chmod +x daemon</p>
+                        <p>Then go to better.game in your browser and click play.</p>
+                        <p>Try to play offline. If the game doesn't launch, read this.</p>
+                        <p>This daemon will not auto-update, so periodically redownload.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Linux isn't working, what should I do?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>All libraries are included and should work on most Linux.</p>
+                        <p>The provided libraries are only used if not found in your system already.</p>
+                        <p>Any glibc Linux with Pipewire should work.</p>
+                        <p>Only this Linux is tested: github.com/nathants/arch-setup</p>
+                        <p>If play offline won't launch, try installing the following libraries from your package manager:</p>
+                        <p>Play offline and check the tail of /tmp/protoverse.stdout.offline for error messages.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>How to record with OBS?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Reformat a second USB drive to exFAT using Windows.</p>
+                        <p>Then follow instructions in the background image of empty tabs on reboot-to-play.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>How do I change my password?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Logout, then login with an incorrect password, then click password reset.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>What are some game tips?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Mousewheel controls throttle for jetpack and car.</p>
+                        <p>Right click to aim down sight, then use mousewheel to zoom in.</p>
+                        <p>Hit escape to choose loadout and configure settings.</p>
+                        <p>Hold ramp and press crouch to flip your ramp for rampsliding.</p>
+                        <p>Press edit on someone else's build to take it. Mark the pattern dark to light and it's yours.</p>
+                        <p>Left mouse builds near, right mouse builds far, and middle mouse builds behind.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Windows time is messed up after using reboot-to-play, how do I fix this?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Reboot-to-play is a modified Arch Linux ISO.</p>
+                        <p>The Arch Linux wiki recommends this adjustment to Windows.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>What inspired you to do this?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Found Fortnite ch1s8. Play solos only, play every day. Changed my life. Best game so far.</p>
+                        <p>Am software engineer. As I watched Fort grow, watched Clix, watched Tfue, watched FNCS, I started to wonder. Why?</p>
+                        <p>Why all the bugs? Why all the cheaters? Why storm surge? Why server lag? Why ping advantage? I wanted to understand.</p>
+                        <p>So, I studied gamedev. I built prototype after prototype trying to understand what makes PVP 100 player buildfighting work.</p>
+                        <p>Eventually, I did understand. Ping advantage? Accidental. Storm surge? Unnecessary. Cheaters? Game breaking.</p>
+                        <p>The way that I understood all that, was to fix it.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Why not release?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Nina said do it.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Release jetpack song when?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Jetpack: <a href="https://pixabay.com/sound-effects/infinite-bass-loop-162623/" class="text-link" target="_blank">https://pixabay.com/sound-effects/infinite-bass-loop-162623/</a></p>
+                        <p>Glider: <a href="https://pixabay.com/music/upbeat-night-city-electronic-dance-207224/" class="text-link" target="_blank">https://pixabay.com/music/upbeat-night-city-electronic-dance-207224/</a></p>
+                        <p>Car: <a href="https://pixabay.com/music/synth-pop-80s-retro-synth-wave-223103/" class="text-link" target="_blank">https://pixabay.com/music/synth-pop-80s-retro-synth-wave-223103/</a></p>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </template>
+    
+    <!-- Shop Page Template -->
+    <template id="shop-template">
+        <div class="card">
+            <h2 class="card-header">Game Shop</h2>
+            
+            <div class="mb-4">
+                <h3 class="mb-3">Purchase Better Bucks</h3>
+                <p class="text-bold mb-3" style="background-color: #343A40; color: white; padding: 8px; text-align: center;">no refunds. don't buy more than you need.</p>
+                <div class="row" style="gap: 20px;">
+                    <div class="col-33 col-md-50 col-sm-100 mb-3" style="flex: 0 0 calc(33.333% - 14px);">
+                        <div class="card">
+                            <h3 class="card-title">500 Better Bucks</h3>
+                            <p class="mb-3">Perfect for casual players.</p>
+                            <p class="text-bold mb-3">$5.00</p>
+                            <button class="btn btn-success btn-sm">Purchase</button>
+                        </div>
+                    </div>
+                    
+                    <div class="col-33 col-md-50 col-sm-100 mb-3" style="flex: 0 0 calc(33.333% - 14px);">
+                        <div class="card">
+                            <h3 class="card-title">1000 Better Bucks</h3>
+                            <p class="mb-3">Most popular choice.</p>
+                            <p class="text-bold mb-3">$10.00</p>
+                            <button class="btn btn-success btn-sm">Purchase</button>
+                        </div>
+                    </div>
+                    
+                    <div class="col-33 col-md-50 col-sm-100 mb-3" style="flex: 0 0 calc(33.333% - 14px);">
+                        <div class="card">
+                            <h3 class="card-title">2000 Better Bucks</h3>
+                            <p class="mb-3">Best value for dedicated players.</p>
+                            <p class="text-bold mb-3">$20.00</p>
+                            <button class="btn btn-success btn-sm">Purchase</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="d-flex justify-content-center mb-4">
+                <p class="text-center mb-3">- OR -</p>
+            </div>
+            
+            <div class="card mb-4">
+                <div class="row">
+                    <div class="col-50 col-md-100 p-3">
+                        <h3 class="card-title">Monthly Subscription</h3>
+                        <p class="mb-3">Get unlimited games and priority queues every month.</p>
+                        <p class="text-bold mb-3">$5.00/month</p>
+                        <button class="btn btn-success btn-sm">Subscribe Now</button>
+                    </div>
+                    
+                    <div class="col-50 col-md-100 p-3">
+                        <h4 class="mb-2">Why Subscribe?</h4>
+                        <ul class="mb-3">
+                            <li>Play unlimited games</li>
+                            <li>Get faster queues</li>
+                            <li>Cheaper if you play 20+ hours per week</li>
+                            <li>Help grow the server pool for everyone</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </template>
+    
+    <!-- Play Page Template -->
+    <template id="play-template">
+        <div class="card">
+            <h2 class="card-header text-center">Play Now</h2>
+            <p class="mb-4 text-center">Ready to jump in? Download the game to start playing.</p>
+            
+            <div class="d-flex justify-content-center mb-4">
+                <button class="btn btn-lg" id="show-download-options" style="background-color: #66CCFF; color: white; border: 3px solid var(--dark);">Download Game</button>
+            </div>
+            
+            <div id="download-options" class="mb-4" style="display: none;">
+                <div class="card mb-3">
+                    <h3 class="card-header text-center">Choose Your Platform</h3>
+                    <div class="d-flex justify-content-center p-3">
+                        <button class="btn mr-3" id="show-windows" style="background-color: #FFCC66; color: white; border: 3px solid var(--dark);">Windows</button>
+                        <button class="btn mr-3" id="show-linux" style="background-color: #FFCC66; color: white; border: 3px solid var(--dark);">Linux</button>
+                        <button class="btn" id="show-reboot" style="background-color: #FFCC66; color: white; border: 3px solid var(--dark);">Reboot to Play</button>
+                    </div>
+                </div>
+                
+                <!-- Download Sections Container -->
+                <div id="download-sections-container">
+                    <!-- Windows Download Section -->
+                    <div id="windows-section" class="card mb-3" style="display: none;">
+                        <h3 class="card-header text-center">Windows Download</h3>
+                        <div class="p-3 text-center">
+                            <p class="mb-2">
+                                <a href="#" class="btn mb-3" style="background-color: #66CCFF; color: white; font-size: 1.1rem; padding: 0.7rem 1.5rem; box-shadow: 3px 3px 0 0 var(--dark); border: 3px solid var(--dark);">
+                                    <strong>Download</strong> better_game.exe
+                                </a>
+                            </p>
+                            <p class="mb-3" style="font-family: monospace; word-break: break-all; font-size: 0.8rem; background-color: #f8f9fa; padding: 10px; border-radius: 5px;">
+                                sha256sum 73f298b42c620cf632fd004813da3d2544dd34cdb2439409e90e7e84e362a6d2
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Linux Download Section -->
+                    <div id="linux-section" class="card mb-3" style="display: none;">
+                        <h3 class="card-header text-center">Linux Download</h3>
+                        <div class="p-3">
+                            <div class="p-3 mb-3" style="background-color: #f8f9fa; border-radius: 5px; border-left: 4px solid var(--primary);">
+                                <p class="mb-2" style="font-family: monospace; white-space: pre-line; font-weight: bold;">
+curl https://better-game.network/daemon > daemon
+
+sha256sum e4e8c63896c8e4d07e0e0f206910abfa8f26b8df3e78780f57c8af6d48cb4838
+
+chmod +x daemon
+
+./daemon</p>
+                            </div>
+                            <p class="mb-3">
+                                Then go to better.game in your browser and click play.<br>
+                                Try to play offline. If the game doesn't launch, <a href="#faq" class="text-link">read this</a>.<br>
+                                This daemon will not auto-update, so periodically redownload.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Reboot to Play Section -->
+                    <div id="reboot-section" class="card mb-3" style="display: none;">
+                        <h3 class="card-header text-center">Reboot to Play</h3>
+                        <div class="p-3">
+                            <p class="mb-3 text-center">Which type of GPU do you have?</p>
+                            <div class="d-flex justify-content-center mb-4">
+                                <button class="btn mr-3 gpu-option" data-target="nvidia" style="background-color: #76B900; color: white; border: 3px solid var(--dark);">NVIDIA</button>
+                                <button class="btn mr-3 gpu-option" data-target="amd" style="background-color: #ED1C24; color: white; border: 3px solid var(--dark);">AMD</button>
+                                <button class="btn gpu-option" data-target="intel" style="background-color: #0071C5; color: white; border: 3px solid var(--dark);">Intel</button>
+                            </div>
+                            
+                            <!-- GPU Download Sections -->
+                            <div id="gpu-sections-container">
+                                <!-- NVIDIA Section -->
+                                <div id="nvidia-section" class="gpu-section" style="display: none;">
+                                    <div class="mb-3 text-center">
+                                        <p class="mb-2">Before downloading, please accept the license agreement:</p>
+                                        <label class="d-block">
+                                            <input type="checkbox" id="nvidia-agreement"> I have read and accept the Nvidia Driver End User License Agreement.
+                                        </label>
+                                    </div>
+                                    
+                                    <!-- NVIDIA Download Info - Hidden until agreement checked -->
+                                    <div id="nvidia-download-info" style="display: none;">
+                                        <div class="p-3 mb-3" style="background-color: #f8f9fa; border-radius: 5px;">
+                                            <p class="mb-3 text-center">
+                                                <a href="#" class="text-link" style="font-size: 1.05rem;"><strong>Read the Install Instructions</strong></a>
+                                            </p>
+                                            <div class="text-center mb-2">
+                                                <a href="#" class="btn" style="background-color: #76B900; color: white; font-size: 1.1rem; padding: 0.7rem 1.5rem; box-shadow: 3px 3px 0 0 var(--dark); border: 3px solid var(--dark);">
+                                                    <strong>Download</strong> NVIDIA ISO
+                                                </a>
+                                            </div>
+                                            <p class="text-center" style="font-size: 0.8rem;">better-game.v29.nvidia.iso</p>
+                                            <p class="mb-0 text-center" style="font-family: monospace; word-break: break-all; font-size: 0.8rem;">
+                                                sha256sum f9fc63024724599ef743f7d4cb6315ccdf807f2199580c16b556517aaf3e5ea9
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- AMD Section -->
+                                <div id="amd-section" class="gpu-section" style="display: none;">
+                                    <div class="p-3 mb-3" style="background-color: #f8f9fa; border-radius: 5px;">
+                                        <p class="mb-3 text-center">
+                                            <a href="#" class="text-link" style="font-size: 1.05rem;"><strong>Read the Install Instructions</strong></a>
+                                        </p>
+                                        <div class="text-center mb-2">
+                                            <a href="#" class="btn" style="background-color: #ED1C24; color: white; font-size: 1.1rem; padding: 0.7rem 1.5rem; box-shadow: 3px 3px 0 0 var(--dark); border: 3px solid var(--dark);">
+                                                <strong>Download</strong> AMD ISO
+                                            </a>
+                                        </div>
+                                        <p class="text-center" style="font-size: 0.8rem;">better-game.v29.amd.iso</p>
+                                        <p class="mb-0 text-center" style="font-family: monospace; word-break: break-all; font-size: 0.8rem;">
+                                            sha256sum 046ea7b4745e546f38d00ec1c1eeb6ed8660c7193ac6a856a75e3f6eb57be169
+                                        </p>
+                                    </div>
+                                </div>
+                                
+                                <!-- Intel Section -->
+                                <div id="intel-section" class="gpu-section" style="display: none;">
+                                    <div class="p-3 mb-3" style="background-color: #f8f9fa; border-radius: 5px;">
+                                        <p class="mb-3 text-center">
+                                            <a href="#" class="text-link" style="font-size: 1.05rem;"><strong>Read the Install Instructions</strong></a>
+                                        </p>
+                                        <div class="text-center mb-2">
+                                            <a href="#" class="btn" style="background-color: #0071C5; color: white; font-size: 1.1rem; padding: 0.7rem 1.5rem; box-shadow: 3px 3px 0 0 var(--dark); border: 3px solid var(--dark);">
+                                                <strong>Download</strong> Intel ISO
+                                            </a>
+                                        </div>
+                                        <p class="text-center" style="font-size: 0.8rem;">better-game.v29.intel.iso</p>
+                                        <p class="mb-0 text-center" style="font-family: monospace; word-break: break-all; font-size: 0.8rem;">
+                                            sha256sum efda43ac93160ec004d82273ff5990f610a71f62540e4f07a40bf456229d3b9e
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    
+    <!-- Account Page Template -->
+    <template id="account-template">
+        <div class="card">
+            <h2 class="card-header">Account</h2>
+            
+            <div class="card mb-4">
+                <h3 class="card-title">Login</h3>
+                <form class="mb-3">
+                    <div class="mb-3">
+                        <label for="username" class="d-block mb-1">Username</label>
+                        <input type="text" id="username" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="d-block mb-1">Password</label>
+                        <input type="password" id="password" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-secondary">Login</button>
+                </form>
+                <p><a href="#register" class="text-link">Create an account</a> if you don't have one.</p>
+            </div>
+        </div>
+    </template>
+    
+    <!-- Footer Page Templates -->
+    <template id="tos-template">
+        <div class="card">
+            <h2 class="card-header">Terms of Service</h2>
+            <div class="p-3">
+                <h3 class="mb-2">Acceptance of the Terms of Service</h3>
+                <p class="mb-3">The following terms and conditions ("Terms") apply to your use of the websites of Better Game. and its affiliates ("Better Game", "we", "us" or "our"), including any content, functionality, products, and services offered on or through such websites (collectively, the "Website"), whether as a guest or a registered user. These Terms also apply to your use of other Better Game services that display or include these Terms ("Additional Services"). In these Terms, the Website and Additional Services are collectively referred to as the "Services."</p>
+                
+                <p class="mb-3">Please read these Terms carefully before you start to use the Services. By using the Services, you accept and agree to be bound and abide by these Terms of Service. If you do not want to agree to these Terms of Service, you must not use the Services. In particular, we want to highlight some important terms, policies, and procedures in these Terms. By accepting these Terms:</p>
+                
+                <p class="mb-3">You are also agreeing to other Better Game rules and policies that are expressly incorporated into and a part of these Terms. Please read them carefully:</p>
+                <ul class="mb-3">
+                    <li>Our <a href="#privacy" class="text-link">Privacy Policy</a> explains what information we collect from you and how we protect it.</li>
+                    <li>Our Fan Content Policy explains what you can do with Better Game's Intellectual Property in the content you create.</li>
+                </ul>
+                
+                <p class="mb-3">To enter into the contract created by these Terms, you must be an adult of the legal age of majority in your country of residence. You are legally and financially responsible for all actions using or accessing our software, including the actions of anyone you allow access to your account. You affirm that you have reached the legal age of majority, understand and accept these Terms. If you are under the legal age of majority, your parent or legal guardian must consent to these Terms.</p>
+                
+                <p class="mb-3">In addition to these Terms, software or services that are included in or otherwise made available to you through the Services may be subject to separate agreement between you and Better Game, such as end user license agreements. If these Terms are inconsistent with any such agreements, those agreements will control.</p>
+                
+                <h3 class="mb-2">Privacy Notice</h3>
+                <p class="mb-3">Please review our <a href="#privacy" class="text-link">Privacy Notice</a> found at https://better.game/#/privacy, which also governs your use of the Services, to understand our practices.</p>
+                
+                <h3 class="mb-2">Changes to the Terms of Service</h3>
+                <p class="mb-3">We may update these Terms from time to time; you should check this page regularly to take notice of any changes. Your continued use of the Services following the posting of revised Terms means that you accept and agree to the changes.</p>
+                
+                <h3 class="mb-2">Accessing the Services and Account Security</h3>
+                <p class="mb-3">We may withdraw or amend the Services, and any related service or content, or restrict access (including by means of cancellation, termination, modification, or suspension of a user account) to all or certain users (including you) without notice and without liability to you in our reasonable discretion. Additionally, due to your geographic location, the Services or some of their features, services, or content may be unavailable to you. Notwithstanding anything to the contrary herein, we may terminate or suspend access to the Services based on your breach of these Terms.</p>
+                
+                <p class="mb-3">To access certain Services, you will be asked to provide registration details or other information, and in order to use such resources, all the information you provide must be correct, current, and complete. From time to time, in order to access the Services or certain games, services, or functionality, Better Game may require some or all users to download updated or additional software. The terms of use of such software may be subject to separate agreement between you and Better Game.</p>
+                
+                <p class="mb-3">If you choose, or are provided with, a user name, password, or any other piece of information as part of our security procedures, you must treat such information as confidential (other than user name), and you must not disclose it to others. You must immediately notify Better Game (via piracy@better.game) of any unauthorized use of your user name or password or any other breach of security. You should use particular caution when accessing your account from a public or shared computer so that others are not able to view or record your password or other personal information. You may only access the Services through your own account. Users do not own their accounts, and gifting or otherwise transferring of accounts or access keys is prohibited.</p>
+                
+                <p class="mb-3">We reserve the right to change your display name if we deem it offensive, misleading, potentially infringing the rights of third parties, or if you have been inactive for more than a year.</p>
+                
+                <p class="mb-3"><strong>Photosensitivity:</strong> Certain people may react to certain visual images or patterns, including flashing lights (regardless of whether they have a diagnosed condition or history). Reactions may be reduced by playing in a well-lit room, avoiding playing while drowsy, viewing the game from some distance or on a smaller screen, and limiting duration of use.</p>
+                
+                <h3 class="mb-2">Intellectual Property Rights</h3>
+                <p class="mb-3">The Services, including all content, features, and functionality thereof, are owned by Better Game, its licensors, or other providers of such material and are protected by United States and international copyright, trademark, patent, and other intellectual property or proprietary rights laws.</p>
+                
+                <p class="mb-3">You are permitted to use the Services for your personal, non-commercial use only or legitimate business purposes related to your role as a current or prospective customer of Better Game. Except as provided below, you must not copy, modify, create derivative works of, publicly display, publicly perform, republish, or transmit any of the material obtained through the Services, or delete or alter any copyright, trademark, or other proprietary rights notices from copies of materials from the Services. However, if you are otherwise in compliance with these Terms, you are permitted to use, elsewhere and on other websites, an unaltered copy of portions of the content that is publicly available on the Website for the limited, non-commercial purpose of discussing such content.</p>
+                
+                <p class="mb-3">You must not reproduce, sell, or exploit for any commercial purposes any part of the Services, access to the Services, or use of the Services or any services or materials available through the Services. Better Game's Fan Content Policy governs non-commercial use of such content.</p>
+                
+                <p class="mb-3">For clarity, the foregoing permissions are limited to the Services, and no rights are granted with respect to any servers, computers, or databases associated with the Services.</p>
+            </div>
+            
+            <div class="p-3">
+                <h3 class="mb-2">Billing and Payment</h3>
+                <p class="mb-3">All charges incurred in connection with the Services are payable in advance and are not refundable in whole or in part, regardless of the payment method, except as expressly set forth in these Terms or as required by applicable law. Through the Services, Better Game may make available the ability to purchase certain products or services using in-game currency or other payment methods as specified by Better Game. When you provide a payment method to Better Game for use in connection with the Services, you represent to Better Game that you are the authorized user of the payment method, and you authorize Better Game to charge your payment method for any fees incurred by you. If your use of the Services is subject to any sales or other taxes, then Better Game may also charge you for those taxes. You are responsible for all uses of the Services, including all applicable taxes and all purchases made by you or anyone else using your account.</p>
+                
+                <p class="mb-3">Better Game reserves the right to suspend or terminate your access to the Services if, after investigation, Better Game determines in its sole discretion that you misused the Services, conducted unauthorized transactions from another user's account, or used the Services to conduct any fraudulent or other illegal activity.</p>
+                
+                <h3 class="mb-2">Prohibited Uses</h3>
+                <p class="mb-3">You may use the Services only for lawful purposes and in accordance with these Terms of Service. You agree not to access or use the Services for any purpose that is illegal or beyond the scope of the Services' intended use (in Better Game's sole judgment).</p>
+                
+                <h3 class="mb-2">User Contributions</h3>
+                <p class="mb-3">The Services contain various forums, networks, and other interactive features that allow you to post, submit, publish, display, or transmit to Better Game and other users ("Post") content or materials ("User Contributions") on or through the Services.</p>
+                
+                <p class="mb-3">All User Contributions must comply with the following content standards: User Contributions must not be illegal, fraudulent, deceptive, obscene, threatening, defamatory, invasive of privacy, infringing of intellectual property rights, or otherwise injurious to third parties or objectionable, and must not consist of or contain software viruses, commercial solicitation, chain letters, mass mailings, or any form of "spam."</p>
+                
+                <p class="mb-3">Any User Contribution that you Post will be considered non-confidential and non-proprietary, and you grant Better Game a nonexclusive, royalty-free, perpetual, irrevocable, and fully sublicensable right to use, copy, reproduce, modify, adapt, publish, translate, create derivative works from, distribute, and display such User Contribution throughout the world in any media; however, Better Game will only share personal information that you provide in accordance with Better Game's Privacy Policy.</p>
+            </div>
+            
+            <div class="p-3">
+                <p class="mb-3">You represent and warrant that you own or otherwise control all of the rights to the User Contributions that you Post at the time of Posting; that the User Contributions are accurate and not fraudulent or deceptive; and that the User Contributions do not violate these Terms or the rights (intellectual property rights or otherwise) of any third party, and will not cause injury to any person or entity. You understand that your User Contributions may be copied by other Services users and discussed on and outside of the Services, and if you do not have the right to submit User Contributions for such use, it may subject you to liability. Better Game takes no responsibility and assumes no liability for any content Posted by you or any third party.</p>
+                
+                <p class="mb-3">Better Game has the right but not the obligation to monitor and edit or remove any User Contributions. Better Game also has the right to terminate your access to all or part of the Services for any or no reason, including without limitation, any violation of these Terms. Better Game may exercise these rights at any time, without notice or liability to you or any third party.</p>
+                
+                <h3 class="mb-2">Linking</h3>
+                <p class="mb-3">You may link to publicly available portions of the Services if you do so in a way that is fair and does not damage or take advantage of our reputation, but you must not establish a link in such a way as to suggest any form of association, approval, or endorsement on our part. The Services must not be framed on any other website or service. We reserve the right to withdraw linking permission without notice.</p>
+                
+                <p class="mb-3">If the Services contain links to other sites and resources provided by third parties, these links are provided for your convenience only. We have no control over the contents of those sites or resources, and accept no responsibility for them or for any loss or damage that may arise from your use of them.</p>
+                
+                <h3 class="mb-2">Disclaimers and Limitation of Liability</h3>
+                <p class="mb-3">Nothing in these Terms will prejudice the statutory rights that you may have as a consumer of the Software or Services. Some countries, states, provinces, or other jurisdictions do not allow the exclusion of certain warranties or the limitation of liability as stated in this section, so the below terms may not fully apply to you. Instead, in such jurisdictions, the exclusions and limitations below shall apply only to the extent permitted by the laws of such jurisdictions.</p>
+                
+                <p class="mb-3">The Services and all information, content, materials, products (including software), and other services included on or otherwise made available to you through the Services are provided by Better Game on an "as is" and "as available" basis. Better Game makes no representations or warranties of any kind, express or implied, as to the operation of the Services, or the information, content, materials, products (including software) or other services included on or otherwise made available to you through the Services. You expressly agree that your use of the Services is at your sole risk. To the full extent permissible by law, Better Game disclaims all warranties, express or implied, including, but not limited to, implied warranties of merchantability and fitness for a particular purpose. Better Game does not warrant that the Services, information, content, materials, products (including software) or other services included on or otherwise made available to you through the Services, Better Game's servers, or electronic communications sent from Better Game are free of viruses or other harmful components.</p>
+            </div>
+            
+            <div class="p-3">
+                <p class="mb-3">To the full extent permissible by law, Better Game will not be liable for any loss of profits or any indirect, incidental, punitive, special, or consequential damages arising out of or in connection with these Terms. Further, to the full extent permissible by law, Better Game's aggregate liability arising out of or in connection with these Terms will not exceed the total amounts you have paid (if any) to Better Game under this Agreement during the twelve (12) months immediately preceding the events giving rise to such liability. These limitations and exclusions regarding damages apply even if any remedy fails to provide adequate compensation.</p>
+                
+                <h3 class="mb-2">Indemnification</h3>
+                <p class="mb-3">This section only applies to the extent permitted by applicable law. If you are prohibited by law from entering into the indemnification obligation below, then you assume, to the extent permitted by law, all liability for all claims, demands, actions, losses, liabilities, and expenses (including attorneys' fees, costs, and expert witnesses' fees) that are the stated subject matter of the indemnification obligation below.</p>
+                
+                <p class="mb-3">You agree to defend, indemnify, and hold harmless Better Game, its affiliates, and licensors, and their respective officers, directors, employees, contractors, agents, licensors, and suppliers from and against any claims, liabilities, damages, judgments, awards, losses, costs, expenses, or fees (including reasonable attorneys' fees) resulting from your User Contributions or violation of these Terms.</p>
+                
+                <h3 class="mb-2">Governing Law and Jurisdiction</h3>
+                <p class="mb-3">This Agreement is entered into in the State of Hawaii, U.S.A., and shall be governed by, and construed in accordance with, the laws of the State of Hawaii, exclusive of its choice of law rules. For any disputes between you and Better Game arising out of or relating to these Terms, you and Better Game agree to submit to the exclusive jurisdiction of the state courts located in Kona or Waimea, Hawaii. You and Better Game agree to waive any jurisdictional, venue, or inconvenient forum objections to such courts (without affecting either party's rights to remove a case to federal court if permissible), as well as any right to a jury trial. The Convention on Contracts for the International Sale of Goods will not apply. Any law or regulation which provides that the language of a contract shall be construed against the drafter will not apply to these Terms. This paragraph will be interpreted as broadly as applicable law permits.</p>
+                
+                <h3 class="mb-2">Termination</h3>
+                <p class="mb-3">Without limiting any other rights of Better Game, Better Game reserves the right to terminate these Terms and your access to the Services if it finds your use of the Services or your public behavior distasteful, in its sole discretion. Upon any termination, you must cease all use of the Services and destroy all copies of any aspect of the Services in your possession.</p>
+                
+                <h3 class="mb-2">Language</h3>
+                <p class="mb-3">To the fullest extent permitted by law, the controlling language for these Terms is English. It is the express wish of the parties that these Terms and all related documents have been drawn up in English. Any translation has been provided for your convenience.</p>
+                
+                <h3 class="mb-2">Waiver and Severability</h3>
+                <p class="mb-3">No waiver of these Terms by Better Game shall be deemed a further or continuing waiver of such term or condition or any other term or condition, and any failure of Better Game to assert a right or provision under these Terms shall not constitute a waiver of such right or provision.</p>
+                
+                <p class="mb-3">If any provision of these Terms is held by a court of competent jurisdiction to be invalid, illegal, or unenforceable for any reason, such provision shall be eliminated or limited to the minimum extent such that the remaining provisions of these Terms will continue in full force and effect.</p>
+            </div>
+            
+            <div class="p-3">
+                <h3 class="mb-2">Notice and Procedure for Making Claims of Copyright Infringement</h3>
+                <p class="mb-3">In accordance with the Digital Millennium Copyright Act ("DMCA") and other applicable law, Better Game has adopted a policy of terminating, in appropriate circumstances as determined by Better Game, users or account holders who are deemed to be repeat infringers of the copyrights of others. Better Game may also at its sole discretion limit access to the Services and/or update, transfer, suspend, or terminate the accounts of any users who infringe the intellectual property rights of others, whether or not there is any repeat infringement.</p>
+                
+                <p class="mb-3">If you believe that your work has been used on the Website or in any other Services in a way that constitutes copyright infringement, please submit a Notice of Alleged Infringement ("DMCA Notice") to our Designated Copyright Agent as follows:</p>
+                
+                <p class="mb-3">
+                    Better Game, Legal Department.<br>
+                    Email: legal@better.game
+                </p>
+                
+                <p class="mb-3">Please include all of the following in your DMCA Notice:</p>
+                
+                <ol class="mb-3">
+                    <li>Identify the copyrighted work that you claim has been infringed. If your DMCA Notice covers multiple works, you may provide a representative list of such works.</li>
+                    <li>Identify the material that you claim is infringing, including a description of where the material is located. Your description must be reasonably sufficient to enable us to locate the material. Where possible, please include the URL of the webpage where the material is located.</li>
+                    <li>Provide your full legal name, mailing address, telephone number, and (if available) e-mail address.</li>
+                    <li>Include the following statement in the body of the DMCA Notice:</li>
+                </ol>
+                
+                <p class="mb-3" style="font-style: italic;">
+                    "I have a good-faith belief that the use of the material is not authorized by the copyright owner, its agent, or the law. I represent that the information in this DMCA Notice is accurate and, under penalty of perjury, that I am the owner of the copyright or authorized to act on the copyright owner's behalf."
+                </p>
+                
+                <p class="mb-3">
+                    5. Provide your electronic or physical signature.
+                </p>
+                
+                <p class="mb-3">
+                    Please note that under 17 U.S.C. 512(f), if you knowingly misrepresent that material or activity is infringing, you may be liable for damages, including costs and attorneys' fees, incurred by us or our users. If you are unsure whether the material or activity you are reporting is infringing, you may wish to contact an attorney before filing a notification with us.
+                </p>
+            </div>
+        </div>
+    </template>
+    
+    <template id="eula-template">
+        <div class="card">
+            <h2 class="card-header">End User License Agreement</h2>
+            
+            <div class="p-3">
+                <p class="mb-3">Please read this Agreement carefully. It is a legal document that explains your rights and obligations related to your use of Better Game's Software, including any Services you access or purchases you make through the Software. By downloading or using the Software, or by otherwise indicating your acceptance of this Agreement, you are agreeing to be bound by the terms of this Agreement. If you do not or cannot agree to the terms of this Agreement, you may not download or use this Software.</p>
+                
+                <p class="mb-3">In particular, we want to highlight some important terms, policies, and procedures in this Agreement. By accepting this Agreement:</p>
+                
+                <ul class="mb-3">
+                    <li>You are also agreeing to other Better Game rules and policies that are expressly incorporated into this Agreement. Please read them carefully:
+                        <ul>
+                            <li>Our <a href="#privacy" class="text-link">Privacy Policy</a> explains what information we collect from you and how we protect it.</li>
+                            <li>Our <a href="#tos" class="text-link">Terms of Service</a> explain the rules for our website.</li>
+                        </ul>
+                    </li>
+                    <li>You grant Better Game a license to use whatever content you create using the Service. You can find more information in the User Generated Content section below.</li>
+                </ul>
+                
+                <p class="mb-3 text-bold">TO ENTER INTO THIS LICENSE AGREEMENT, YOU MUST BE AN ADULT OF THE LEGAL AGE OF MAJORITY IN YOUR COUNTRY OF RESIDENCE. YOU ARE LEGALLY AND FINANCIALLY RESPONSIBLE FOR ALL ACTIONS USING OR ACCESSING OUR SOFTWARE, INCLUDING THE ACTIONS OF ANYONE YOU ALLOW ACCESS TO YOUR ACCOUNT. YOU AFFIRM THAT YOU HAVE REACHED THE LEGAL AGE OF MAJORITY, UNDERSTAND AND ACCEPT THIS AGREEMENT. IF YOU ARE UNDER THE LEGAL AGE OF MAJORITY, YOUR PARENT OR LEGAL GUARDIAN MUST CONSENT TO THIS AGREEMENT.</p>
+                
+                <p class="mb-3">Certain words or phrases are defined to have certain meanings when used in this Agreement. Those words and phrases are defined below in Section 15.</p>
+                
+                <p class="mb-3">Your agreement is with Better Game.</p>
+                
+                <h3 class="mb-2">1. License Grant</h3>
+                <p class="mb-3">Better Game grants you a personal, non-exclusive, non-transferable, non-sublicensable limited right and license to install and use the Software on compatible devices you own or control for your personal entertainment use (the "License"). The rights that Better Game grants you under the License are subject to the terms of this Agreement, and you may only make use of the License if you comply with all applicable terms.</p>
+                
+                <p class="mb-3">The License becomes effective on the date you accept this Agreement. The Software is licensed, not sold, to you under the License. The License does not grant you any title or ownership in the Software.</p>
+                
+                <h3 class="mb-2">2. License Conditions</h3>
+                <p class="mb-3">You may not do or attempt to do any of the following with respect to the Software or any of its parts:</p>
+                
+                <p class="mb-3">(a) Use it commercially or for a promotional purpose except as Better Game expressly authorizes;</p>
+                
+                <p class="mb-3">(b) Copy, reproduce, distribute (including via a network server), display, or use it in a way that is not expressly authorized in this Agreement;</p>
+                
+                <p class="mb-3">(c) Sell, rent, lease, license, distribute, or otherwise transfer it;</p>
+                
+                <p class="mb-3">(d) Reverse engineer, derive source code from, modify, adapt, translate, decompile, or disassemble it or make derivative works based on it;</p>
+                
+                <p class="mb-3">(e) Remove, disable, circumvent, or modify any proprietary notice or label or security technology included in it;</p>
+                
+                <p class="mb-3">(f) Create, develop, distribute, or use any unauthorized software programs to gain advantage in any online or other game modes;</p>
+                
+                <p class="mb-3">(g) Use it to infringe or violate the rights of any third party, including but not limited to any intellectual property, publicity, or privacy rights;</p>
+                
+                <p class="mb-3">(h) Use, export, or re-export it in violation of any applicable law or regulation; or</p>
+                
+                <p class="mb-3">(i) Behave in a manner which is detrimental to the enjoyment of the Software by other users as intended by Better Game, in Better Game's sole judgment, including but not limited to the following—harassment, use of abusive or offensive language, game abandonment, game sabotage, spamming, social engineering, scamming, running or using methods which are not authorized by Better Game and which interfere with the outcome and/or the course of the Software (including Cheats, bots, scripts, or mods not expressly authorized by Better Game) by giving you and/or another user an advantage over other players who do not use such methods, or making or otherwise contributing to such unauthorized software.</p>
+                
+                <p class="mb-3">The Software may contain Cheat Detection software or features, or you may be prompted to install Cheat Detection software during your installation of the Software. If you do not agree to install the Cheat Detection software or at any time remove or disable the Cheat Detection software or features, the License granted to you automatically terminates, and you may not make use of the Software. The Software or the Cheat Detection software may collect and transmit details about your account, gameplay, and potentially unauthorized programs or processes in connection with Cheat Detection, subject to Better Game's Privacy Policy. In the event that Cheats are identified, you agree that Better Game may exercise any or all of its rights under this Agreement.</p>
+            </div>
+            
+            <div class="p-3">
+                <h3 class="mb-2">3. Updates and Patches</h3>
+                <p class="mb-3">Better Game may provide patches, updates, or upgrades to the Software that must be installed in order for you to continue to use the Software or Services. Better Game may update the Software remotely without notifying you, and you hereby consent to Better Game applying patches, updates, and upgrades. Better Game may modify, suspend, discontinue, substitute, replace, or limit your access to any aspect of the Software or Services at any time. You acknowledge that your use of the Software or Services does not confer on you any interest, monetary or otherwise, in any aspect or feature of the Software or Services, including but not limited to any in-game rewards, trophies, achievements, character levels, Game Currency, or Content. You also acknowledge that any character data, game progress, game customization, or other data related to your use of the Software or Services may cease to be available to you at any time without notice from Better Game, including without limitation after a patch, update, or upgrade is applied by Better Game. Better Game does not have any maintenance or support obligations with respect to the Software or Services.</p>
+                
+                <h3 class="mb-2">4. Game Currency and Content</h3>
+                <p class="mb-3">Better Game may offer you the ability to acquire licenses to in-game currency ("Game Currency") or Content, such as by:</p>
+                
+                <p class="mb-3">(a) Purchasing a limited license to use Game Currency for a fee ("Purchased Game Currency");</p>
+                
+                <p class="mb-3">(b) Earning a limited license to use Game Currency by performing or accomplishing specific tasks in the Software; or</p>
+                
+                <p class="mb-3">(c) Purchasing for a fee, exchanging Game Currency for, or earning a limited license to use Content.</p>
+                
+                <p class="mb-3">Also, Better Game may facilitate the exchange of certain Content through the Software, in some cases for a fee. You may only use such Game Currency or Content if you pay the associated fee (if any). When you earn or pay the fee to obtain such Game Currency or Content, you are obtaining or purchasing from Better Game the right to have your License include such Game Currency or Content. Regardless of any references Better Game may make outside this Agreement to purchasing or selling Game Currency or Content, both Game Currency and Content are licensed, not sold, to you under the License.</p>
+                
+                <p class="mb-3">Neither Game Currency nor Content are redeemable for money or monetary value from Better Game or any other person, except as otherwise required by applicable law. Game Currency and Content do not have an equivalent value in real currency and do not act as a substitute for real currency. Neither Better Game nor any other person or entity has any obligation to exchange Game Currency or Content for anything of value, including, but not limited to, real currency. You agree that Better Game may engage in actions that may impact the perceived value or purchase price, if applicable, of Game Currency and Content at any time, except as prohibited by applicable law.</p>
+                
+                <p class="mb-3">All purchases of Purchased Game Currency and Content are final and are not refundable, transferable, or exchangeable under any circumstances, except as otherwise required by applicable law. Better Game, in its sole discretion, may impose limits on the amount of Game Currency or Content that may be purchased, earned, accumulated, redeemed, or otherwise used.</p>
+                
+                <p class="mb-3">Except as otherwise prohibited by applicable law, Better Game, in its sole discretion, has the absolute right to manage, modify, substitute, replace, suspend, cancel, or eliminate Game Currency or Content, including your ability to access or use Game Currency or Content, without notice or liability to you. You may not transfer, sell, gift, exchange, trade, lease, sublicense, or rent Game Currency or Content except within the Software and as expressly permitted by Better Game.</p>
+                
+                <p class="mb-3">Except as otherwise prohibited by applicable law, Better Game reserves and retains all rights, title, and interest, property or otherwise, in and to the Game Currency and Content. The license to Game Currency and Content under the License will terminate upon termination of the License and as otherwise provided herein.</p>
+                
+                <p class="mb-3">When you provide payment information to Better Game or its authorized processor, you represent that you are an authorized user of the payment card, PIN, key, account, or other payment method specified by you, and you authorize Better Game to charge such payment method for the full amount of the transaction.</p>
+            </div>
+            
+            <div class="p-3">
+                <h3 class="mb-2">5. User Generated Content</h3>
+                <p class="mb-3">Better Game may provide features through the Software or the Services that allow you to create, develop, modify, or contribute Content ("UGC") and to upload, publish, or otherwise make available UGC to some or all users of the Services. These features may also allow you to interact with, manipulate, and change UGC in whole or in part. Better Game may modify, limit, or discontinue certain features of the Service without notice or liability to you.</p>
+                
+                <p class="mb-3">"UGC" includes, without limitation, buildings, chat posts, character data, game customization, in-game constructions, replays, cinematics, scripts and programs, modes, gameplay, experiences, interactive features, and screenshots, music, sounds, sound recordings (and the musical works embodied therein), audiovisual combinations, musical works, animations, voice chat audio data, and other types of works (standalone or in combination).</p>
+                
+                <p class="mb-3"><strong>License to Better Game.</strong> If you make or have made available any UGC in the Services, you give Better Game permission to host, copy, import, store, modify, adapt, display, publicly perform (including by means of digital audio transmissions), reproduce (and make mechanical reproductions of musical works embodied in sound recordings), create derivative works of (including synchronize to visual images), publicly display, transfer, sublicense, and distribute (collectively "Use") that UGC, in whole or in part, including for commercial publicity and marketing purposes, in any country. This permission is perpetual and irrevocable and applies to any media, platform, or channel in connection with the Software and Services.</p>
+                
+                <p class="mb-3">The rights you grant to Better Game in this Section are provided on a through-to-the-audience basis, which means the owners or operators of third-party services will not have any separate liability to you or any other third party for UGC provided to or used on such third-party services via the Service. Better Game needs these permissions in order to make your UGC available to players as part of the Services (i.e., in-game), and to make it available to streamers and content creators off of the Services (e.g., for use on other platforms). These rights need to be irrevocable because of the many channels in which UGC is distributed by us and others after it's created.</p>
+                
+                <p class="mb-3">You understand that you are not entitled to receive any compensation, fees, consideration, or other remuneration in connection with your UGC for any reason, including Better Game's exercise of the rights you grant to Better Game in this Section, and that Better Game is not obligated to exercise the rights you grant.</p>
+                
+                <p class="mb-3"><strong>Musical Works.</strong> Better Game may, in its sole discretion, choose to make available sound recordings and the musical works embodied in the sound recordings ("Licensed Music") in connection with UGC. If Better Game makes available Licensed Music for use in your UGC, Better Game grants you a non-exclusive, personal, limited, revocable, non-transferable license to:</p>
+                
+                <p class="mb-3">(a) Synchronize the Licensed Music into UGC during the period of time that the Licensed Music is made available through the Services;</p>
+                
+                <p class="mb-3">(b) Play, listen, and interact with UGC containing Licensed Music solely through the Services.</p>
+                
+                <p class="mb-3">Your modifications (e.g., edits, use of a portion of) the Licensed Music to synchronize into the UGC are considered derivative works included in the definition of Licensed Music, the rights to which are retained by Better Game and its licensors.</p>
+                
+                <p class="mb-3"><strong>Special Rules for Recording Artists.</strong> If you are a composer or author of a musical work and are:</p>
+                
+                <p class="mb-3">(a) Affiliated with or a member of a performing-rights organization ("PRO");</p>
+                
+                <p class="mb-3">(b) Under contract with a record label; or</p>
+                
+                <p class="mb-3">(c) Have assigned your rights to a music publisher,</p>
+                
+                <p class="mb-3">then you must notify the interested party of the royalty-free license you grant through this Agreement to Better Game. You are solely responsible for ensuring your compliance with the relevant party's reporting or contractual obligations, and (if applicable) obtaining the consent of that party to grant the royalty-free license(s) in this Agreement, including if you create any new recordings through the Service that your label may attempt to claim.</p>
+                
+                <p class="mb-3">You represent and warrant that any UGC containing Licensed Music is not subject to and Better Game has no obligation to pay royalties to any third party, including without limitation a sound recording copyright owner (e.g., a record label), a musical work copyright owner (e.g., a music publisher), a PRO (e.g., ASCAP, BMI, SESAC, etc.), a sound recording PRO, any unions or guilds, or other third parties.</p>
+            </div>
+            
+            <div class="p-3">
+                <p class="mb-3">Better Game does not allow intellectual-property infringement activities through the Software or the Services. You may not and agree not to create, generate, or make available through the Software or the Services any UGC to which you do not have the right to grant Better Game such license in all of the elements (including the Licensed Music) of the UGC.</p>
+                
+                <p class="mb-3">If you do choose to create, generate, or make available your UGC through the Software or Services, you are solely responsible for your UGC and represent and warrant that:</p>
+                
+                <p class="mb-3">(a) You are the creator and owner of, and have all the necessary licenses and rights to use and authorize Better Game to exploit the license granted above;</p>
+                
+                <p class="mb-3">(b) Your UGC, and Better Game's use of the UGC as contemplated under this Agreement, will not infringe or violate any third-party rights, including copyright, trademark, patent, trade secret, moral rights, or the rights of privacy or publicity;</p>
+                
+                <p class="mb-3">(c) Better Game does not need to obtain any further licenses, provide attribution, or pay royalties or other compensation to any third parties; and</p>
+                
+                <p class="mb-3">(d) Better Game's use of your UGC will not violate any third-party contract or cause Better Game to violate any applicable laws or regulations.</p>
+                
+                <p class="mb-3">You are responsible for your UGC, so please don't make objectionable content available on or through the Services. If you do, we may have to take it down. Better Game may, but is under no obligation to, edit or control any UGC you or others make available through the Software or the Services. Better Game may at any time screen, remove, delete, edit, block, or refuse to publish UGC that violates this Agreement or is otherwise objectionable as determined in Better Game's sole discretion and without prior notice or any liability to you or any third party. If you provide UGC, you may only use the tools that Better Game provides through the normal functionality of the Service to remove or modify that specific type of UGC.</p>
+                
+                <p class="mb-3">You understand that you may be exposed to UGC from a variety of sources when using the Software or the Services and acknowledge that UGC may be inaccurate, offensive, indecent, or otherwise objectionable. You agree that Better Game shall not be responsible or liable for your or others' UGC.</p>
+                
+                <p class="mb-3">To the fullest extent permitted by law, you waive and agree to waive all rights of authorship, paternity, attribution, integrity, disclosure, withdrawal, and any other rights that are known or referred to as "moral rights," "artist's rights," "droit moral," or other similar rights, recognized under any legal or equitable theory of any country or under any treaty, regardless of whether that right is referred to as a "moral right" (collectively "Moral Rights") in and to your UGC. You further knowingly and irrevocably agree to not exercise any Moral Rights in and to your UGC that you have not waived in any manner that interferes with any exercise of granted rights. You waive and agree not to assert your Moral Rights even if your UGC is altered or changed in a manner not agreeable to you.</p>
+                
+                <h3 class="mb-2">6. Feedback</h3>
+                <p class="mb-3">If you provide Better Game with any Feedback, you hereby grant Better Game a non-exclusive, fully paid, royalty-free, worldwide, perpetual, irrevocable, sublicensable, transferable, and assignable license to use, reproduce, distribute, modify, adapt, prepare derivative works based on, publicly perform, publicly display, make, have made, use, sell, offer to sell, import, and otherwise exploit any and all Feedback for any purposes, for all current and future methods and forms of exploitation. "Feedback" means suggestions, comments, ideas, and all other types of information, including software and code, that you provide, publish, or otherwise communicate directly or indirectly (including your employees, agents, contractors, or representatives) to Better Game or its agents that relates to the Services or Software. If any such rights may not be licensed under applicable law (such as moral and other personal rights), you hereby waive and agree not to assert any such rights. You understand and agree that Better Game is not required to make any use of any Feedback that you provide. You agree that if Better Game makes use of your Feedback, Better Game is not required to credit or compensate you for your contribution. You represent and warrant that you have sufficient rights in any Feedback that you provide to Better Game to grant Better Game and other affected parties the rights described above. This includes but is not limited to intellectual-property rights and other proprietary or personal rights.</p>
+            </div>
+            
+            <div class="p-3">
+                <h3 class="mb-2">7. Ownership/Third Party Licenses</h3>
+                <p class="mb-3">Better Game and its licensors own all title, ownership rights, and intellectual property rights in the Software and Services. Features may be made available to you via the Software and Services that provide prefabricated templates or in-game items to use in connection with your UGC, however your use of a template does not give you any copyrights or other ownership in the template. Better Game, Better Game's logos, and their respective logos are trademarks or registered trademarks of Better Game and its affiliates in the United States of America and elsewhere. All rights granted to you under this Agreement are granted by express license only and not by sale. No license or other rights shall be created hereunder by implication, estoppel, or otherwise.</p>
+                
+                <p class="mb-3">The Software includes certain components provided by Better Game's licensors. A list of credits and notices for third-party components may be found in the game interface.</p>
+                
+                <h3 class="mb-2">8. Disclaimers and Limitation of Liability</h3>
+                <p class="mb-3">Nothing in this Agreement will prejudice the statutory rights that you may have as a consumer of the Software or Services. Some countries, states, provinces, or other jurisdictions do not allow the exclusion of certain warranties or the limitation of liability as stated in this section, so the below terms may not fully apply to you. Instead, in such jurisdictions, the exclusions and limitations below shall apply only to the extent permitted by the laws of such jurisdictions.</p>
+                
+                <p class="mb-3">The Software (including any Game Currency and Content) and Services are provided on an "as is" and "as available" basis, "with all faults" and without warranty of any kind. Better Game, its licensors, and its and their affiliates disclaim all warranties, conditions, common law duties, and representations (express, implied, oral, and written) with respect to the Software and Services, including without limitation all express, implied, and statutory warranties and conditions of any kind, such as title, non-interference with your enjoyment, authority, non-infringement, merchantability, fitness or suitability for any purpose (whether or not Better Game knows or has reason to know of any such purpose), system integration, accuracy or completeness, results, reasonable care, workmanlike effort, lack of negligence, and lack of viruses, whether alleged to arise under law, by reason of custom or usage in the trade, or by course of dealing. Without limiting the generality of the foregoing, Better Game, its licensors, and its and their affiliates make no warranty that:</p>
+                
+                <p class="mb-3">(1) The Software or Services will operate properly;</p>
+                
+                <p class="mb-3">(2) That the Software or Services will meet your requirements;</p>
+                
+                <p class="mb-3">(3) That the operation of the Software or Services will be uninterrupted, bug-free, or error-free in any or all circumstances; or</p>
+                
+                <p class="mb-3">(4) That any defects in the Software or Services can or will be corrected.</p>
+                
+                <p class="mb-3">Any warranty against infringement that may be provided in Section 2-312 of the Uniform Commercial Code or in any other comparable statute is expressly disclaimed. Better Game, its licensors, and its and their affiliates do not guarantee continuous, error-free, virus-free, or secure operation of or access to the Software or Services. This paragraph will apply to the maximum extent permitted by applicable law.</p>
+                
+                <p class="mb-3">To the maximum extent permitted by applicable law, neither Better Game, nor its licensors, nor its or their affiliates, nor any of Better Game's service providers (collectively, the "Better Game Parties"), shall be liable in any way for any loss of profits or any indirect, incidental, consequential, special, punitive, or exemplary damages arising out of or in connection with this Agreement or the Software (including any Game Currency or Content) or Services, or the delay or inability to use or lack of functionality of the Software or Services, even in the event of a Better Game Party's fault, tort (including negligence), strict liability, indemnity, product liability, breach of contract, breach of warranty, or otherwise, and even if a Better Game Party has been advised of the possibility of such damages. Further, to the maximum extent permitted by applicable law, the aggregate liability of the Better Game Parties arising out of or in connection with this Agreement or the Software (including any Game Currency or Content) or Services will not exceed the total amounts you have paid (if any) to Better Game for the Software (including any Game Currency or Content) during the twelve (12) months immediately preceding the events giving rise to such liability. These limitations and exclusions regarding damages apply even if any remedy fails to provide adequate compensation.</p>
+            </div>
+            
+            <div class="p-3">
+                <h3 class="mb-2">9. Indemnity</h3>
+                <p class="mb-3">This section only applies to the extent permitted by applicable law. If you are prohibited by law from entering into the indemnification obligation below, then you assume, to the extent permitted by law, all liability for all claims, demands, actions, losses, liabilities, and expenses (including attorneys' fees, costs, and expert witnesses' fees) that are the stated subject matter of the indemnification obligation below.</p>
+                
+                <p class="mb-3">You agree to indemnify, pay the defense costs of, and hold harmless Better Game, its affiliates, and licensors, and their respective officers, directors, employees, contractors, agents, licensors, and suppliers from and against any claims, liabilities, damages, judgments, awards, losses, costs, expenses, or fees (including reasonable attorneys' fees) resulting from your User Contributions or violation of these Terms.</p>
+                
+                <h3 class="mb-2">10. Termination</h3>
+                <p class="mb-3">Without limiting any other rights of Better Game, this Agreement will terminate automatically without notice if you fail to comply with any of its terms and conditions. Additionally, Better Game reserves the right to terminate this Agreement and your access to the Services if it finds your use of the Services or your public behavior distasteful, in its sole discretion. You may also terminate this Agreement by deleting the Software from all devices on which you've installed it. Upon any termination, the License will automatically terminate, you may no longer exercise any of the rights granted to you by the License, and you must destroy all copies of the Software in your possession.</p>
+                
+                <p class="mb-3">Except to the extent required by law, all payments and fees are non-refundable under all circumstances, regardless of whether or not this Agreement has been terminated.</p>
+                
+                <p class="mb-3">Sections 2, 5–9, and 11–15 will survive any termination of this Agreement.</p>
+                
+                <h3 class="mb-2">11. Governing Law and Jurisdiction</h3>
+                <p class="mb-3">This Agreement is entered into in the State of Hawaii, U.S.A., and shall be governed by, and construed in accordance with, the laws of the State of Hawaii, exclusive of its choice of law rules. For any disputes between you and Better Game arising out of or relating to this Agreement, you and Better Game agree to submit to the exclusive jurisdiction of the state courts located in Kona or Waimea, Hawaii. You and Better Game agree to waive any jurisdictional, venue, or inconvenient forum objections to such courts (without affecting either party's rights to remove a case to federal court if permissible), as well as any right to a jury trial. The Convention on Contracts for the International Sale of Goods will not apply. Any law or regulation which provides that the language of a contract shall be construed against the drafter will not apply to this Agreement. This paragraph will be interpreted as broadly as applicable law permits.</p>
+            </div>
+            
+            <div class="p-3">
+                <h3 class="mb-2">12. Amendments of this Agreement</h3>
+                <p class="mb-3">Better Game may issue an amended Agreement, Terms of Service, or Privacy Policy at any time in its discretion by posting the amended Agreement, Terms of Service, or Privacy Policy on its website or by providing you with digital access to amended versions of any of these documents when you next access the Software. If any amendment to this Agreement, the Terms of Service, or Privacy Policy is not acceptable to you, you may terminate this Agreement and must stop using the Software. Your continued use of the Software will demonstrate your acceptance of the amended Agreement and Terms of Service as well as your acknowledgement that you have read the amended Privacy Policy.</p>
+                
+                <h3 class="mb-2">13. No Assignment</h3>
+                <p class="mb-3">You may not, without the prior written consent of Better Game, assign, transfer, charge, or subcontract all or any of your rights or obligations under this Agreement, and any attempt without that consent will be null and void. If restrictions on transfer of the Software in this Agreement are not enforceable under the law of your country, then this Agreement will be binding on any recipient of the Software. Better Game may at any time assign, transfer, charge, or subcontract all or any of its rights or obligations under this Agreement.</p>
+                
+                <h3 class="mb-2">14. Definitions</h3>
+                <p class="mb-3">As used in this Agreement, the following capitalized words have the following meanings:</p>
+                
+                <ul class="mb-3">
+                    <li>"Cheat Detection" means functionality intended to identify Cheats.</li>
+                    <li>"Cheats" means programs, methods, or other processes which may give players an unfair competitive advantage in the Software.</li>
+                    <li>"Confidential Information" means any non-public information related to the Software, including without limitation information related to gameplay or other content, Game Currency, Content, the Services, your own feedback and comments, and the feedback or comments of any other licensee of the Software or any Better Game representative.</li>
+                    <li>"Content" means any virtual items, virtual environments, or other content that Better Game makes available for you to access or download through or in connection with the Software, and expressly includes Licensed Music and UGC that has been licensed to us by our users.</li>
+                    <li>"Feedback" means any feedback or suggestions that you provide to Better Game regarding the Software, Services, or other Better Game products and services.</li>
+                    <li>"Services" means any services made available to you through the Software, including services to acquire, maintain, and use Game Currency and Content.</li>
+                    <li>"Software" means the proprietary software application known as Better Game, and any patches, updates, and upgrades to the application, and all related content and documentation made available to you by Better Game under this Agreement, including but not limited to all software code, titles, themes, objects, characters, names, dialogue, catchphrases, locations, stories, artwork, animation, concepts, sounds, audio-visual effects, methods of operation, and musical compositions that are related to the application, and any copies of any of the foregoing. Software specifically includes all Game Currency and Content for which you have paid the associated fee or otherwise acquired a license under Section 4.</li>
+                </ul>
+                
+                <h3 class="mb-2">15. Miscellaneous</h3>
+                <p class="mb-3">This Agreement and any document or information referred to in this Agreement constitute the entire agreement between you and Better Game relating to the subject matter covered by this Agreement. All other communications, proposals, and representations with respect to the subject matter covered by this Agreement are excluded.</p>
+                
+                <p class="mb-3">The original of this Agreement is in English; any translations are provided for reference purposes only. It is the express wish of the parties that these Terms and all related documents have been drawn up in English.</p>
+                
+                <p class="mb-3">This Agreement describes certain legal rights. You may have other rights under the laws of your jurisdiction. This Agreement does not change your rights under the laws of your jurisdiction if the laws of your jurisdiction do not permit it to do so. Limitations and exclusions of warranties and remedies in this Agreement may not apply to you because your jurisdiction may not allow them in your particular circumstance. In the event that certain provisions of this Agreement are held by a court or tribunal of competent jurisdiction to be unenforceable, those provisions shall be enforced only to the furthest extent possible under applicable law, and the remaining terms of this Agreement will remain in full force and effect.</p>
+                
+                <p class="mb-3">Any act by Better Game to exercise, or failure or delay in exercise of, any of its rights under this Agreement, at law or in equity will not be deemed a waiver of those or any other rights or remedies available in contract, at law, or in equity.</p>
+                
+                <p class="mb-3">You agree that this Agreement does not confer any rights or remedies on any person other than the parties to this Agreement, except as expressly stated.</p>
+                
+                <p class="mb-3">Better Game's obligations are subject to existing laws and legal process, and Better Game may comply with law enforcement or regulatory requests or requirements despite any contrary term in this Agreement.</p>
+            </div>
+        </div>
+    </template>
+    
+    <template id="privacy-template">
+        <div class="card">
+            <h2 class="card-header">Privacy Policy</h2>
+            
+            <div class="p-3">
+                <p class="mb-3">Welcome to Better Game!</p>
+
+                <p class="mb-3">Better Game is headquartered in Waikoloa, Hawaii. We and our subsidiaries have offices and operations located around the world that help create and deliver Better Game.</p>
+
+                <p class="mb-3">This privacy policy describes the different ways we may collect, use, and share information on, through, or in connection with the Better Game Services (see "What are the Better Game Services?" below). If you have any questions, you can always reach out to us as described in "Contact Us" below.</p>
+
+                <p class="mb-3">When we refer to "Better Game" (or any similar terms like "we" or "us") in this privacy policy, we mean the Better Game entity that controls and is responsible for your information, including Better Game and its subsidiaries that help provide and support the Better Game Services.</p>
+                
+                <h3 class="mb-2">1. WHAT ARE THE BETTER GAME SERVICES?</h3>
+                <p class="mb-3">We use the term "Better Game Services" to describe any Better Game products or services that directly link to this privacy policy. These include, for example:</p>
+                
+                <ul class="mb-3">
+                    <li>Better Game.</li>
+                    <li>Developer tools, including the Developer Portal and related software.</li>
+                </ul>
+                
+                <p class="mb-3">Note that your use of the Better Game Services may also be subject to additional terms and conditions. For example, you must review and accept the Better Game End User License Agreement to play our games.</p>
+
+                <p class="mb-3">Please read this entire privacy policy. You should also carefully review any other agreements that apply to the Better Game Services you use, and confirm you understand and agree to them, before using those products or services.</p>
+                
+                <h3 class="mb-2">2. WHAT INFORMATION DO WE COLLECT?</h3>
+                <p class="mb-3">The types of information we collect depend on how you interact with us. Generally speaking, we collect information in three main ways: A) when you provide it to us, B) automatically when you use the Better Game Services, and C) from service providers and third parties.</p>
+                
+                <h4 class="mb-2">A. Information You Provide</h4>
+                <p class="mb-3">You can provide us with different kinds of information depending on how you interact with the Better Game Services. Sometimes we'll ask you to provide specific pieces of information, such as when we require it to provide parts of the Better Game Services to you (for example, by prompting you to provide your date of birth or complete an online registration process). If we ask you to provide us with information in these cases and you choose not to, you may not be able to access the relevant Better Game Services and/or some features may not operate as intended.</p>
+                
+                <p class="mb-3">For instance, in order to make purchases on our platform and to play some of our games, you'll need a Better Game account. To create one, you'll need to provide us with basic registration information like your name, a public-facing display name, password, the country you live in, and email address. If you want to make a purchase, we may ask you to provide payment-related information (like your credit card number and expiration date) to complete the transaction. In addition, many of our services require your date of birth to determine which features we can offer you and which settings to apply to your account based on your age and location.</p>
+                
+                <p class="mb-3">We also collect the information you voluntarily provide to sign up for email alerts, use social features like forums or chat, register for early access to our games, use our developer tools (including to create and publish games and other content), enable two-factor authentication, register for or attend our events, complete surveys, or contact us through Player Support requests or customer service. If you use our voice chat feature and voice reporting is enabled in a voice channel, snippets of voice chat audio data will be stored on your device and the devices of participants in the voice channel. If a violation of our Community Rules is reported, these snippets may be transmitted to Better Game to help us enforce those Community Rules. If you enter a contest or competitive event, or participate in our creator programs, we'll collect your application information and other information we may need to help confirm your eligibility and process payouts. We collect whatever information you choose to provide to us in those or other similar cases.</p>
+            </div>
+            
+            <div class="p-3">
+                <h4 class="mb-2">B. Information We Collect Automatically</h4>
+                <p class="mb-3">We collect some information automatically when you visit, access, or use the Better Game Services. This includes information about your gameplay or application usage, purchases, entitlements, and other activity in the Better Game Services, typically associated with your account (if you are logged into your Better Game account or use a third-party account to access the Better Game Services) or with an identifier we have assigned to your device or profile. While the specific types of information that we automatically collect may vary, they generally include:</p>
+                
+                <ul class="mb-3">
+                    <li>Usage information and statistics about how you interact with the Better Game Services, including the application you used or the game you played, how long you used or played it and when, gameplay attempts, progression and results, saved preferences, crash reports, the URLs of our websites that you have visited, URLs of referring and exiting pages, page views, time spent on a page, number of clicks, and platform type;</li>
+                    <li>Technical information about your computer, device, hardware, or software you use to access our services, such as IP address, device identifiers, your internet service provider, plugins, or other transactional or identifier information for your device (such as device make and model, information about device operating systems and browsers, or other device or system-related specifications); and</li>
+                    <li>General location of your device, which we typically derive from your device's IP address.</li>
+                </ul>
+                
+                <p class="mb-3">The Better Game Services use technologies such as cookies, log files, and web beacons to automatically collect the types of information listed above. Some of these technologies may create small files or record-keeping tools that may be stored on your device. They help us, our service providers, and third parties recognize your device and provide information about how you use and interact with the Better Game Services. For example, they support our ability to authenticate users, remember preferences, manage advertising, personalize experiences, and conduct data analytics.</p>
+                
+                <p class="mb-3">Please note that if certain features on the Better Game Services are provided by third parties, those third parties may also use automated means of data collection and may record information about your use of the Better Game Services, their services, or others' websites over time. For example, when you use Better Game Services that include third-party software, those third-party providers may collect information through their technology. These features are subject to those third parties' privacy notices and policies.</p>
+                
+                <h4 class="mb-2">C. Information We Collect from Other Sources</h4>
+                <p class="mb-3">In some cases, we may also receive information about you from service providers and third parties in connection with your use of the Better Game Services or your interactions with us on other platforms.</p>
+                
+                <p class="mb-3">For example, some other developers allow you to use your Better Game account to log in to their service. And if you choose to link your Better Game account with your account on a third-party social media (like Facebook), gaming (like Steam), or other similar website or service, or if you interact with an ad for one of the Better Game Services on an external website or service, the company that operates that website or service may share some information with Better Game in accordance with their own privacy practices. Your privacy settings on the other company's website or service typically control the specific types of information they can share with Better Game, so please be sure to review and update them regularly. Common examples for linked accounts might include your third-party account display name and user ID, as well as associated device information, name, and email address.</p>
+                
+                <p class="mb-3">You can also buy, download, or access some Better Game Services on or through services operated by third parties. If you do, they may provide us with information to facilitate your access to and use of the Better Game Services. This typically includes information like your display name, user ID, and device and region information. For example, you can choose to download and play our games on gaming consoles (like PlayStation®, Microsoft Xbox, and Nintendo Switch) through your gaming console account. When you do, the company operating that platform or service may share some information with us, which helps us do things like facilitate your gameplay and track your progression and entitlements.</p>
+            </div>
+            
+            <div class="p-3">
+                <h4 class="mb-2">D. Fraud Prevention & Anti-Cheat</h4>
+                <p class="mb-3">Providing users with a fair, balanced, and competitive experience on the Better Game Services is extremely important to us. We strictly enforce prohibitions against cheating, hacking, account stealing, and any other unauthorized or fraudulent activity on the Better Game Services. We use a variety of anti-cheat and fraud prevention technologies to help us identify and prevent malicious activity. These services may collect and analyze data about your computer and the software on your computer to detect cheating and may be provided by Better Game or by service providers.</p>
+                
+                <h3 class="mb-2">3. HOW DO WE USE INFORMATION?</h3>
+                <p class="mb-3">As a general matter, we use the information we collect (either individually or in combination with other information collected as described in this policy) to help us provide, improve, customize, analyze, and promote the Better Game Services.</p>
+                
+                <p class="mb-3">This includes using it for purposes such as:</p>
+                
+                <ul class="mb-3">
+                    <li>Creating, verifying, and managing user accounts and features;</li>
+                    <li>Providing the Better Game Services, as well as support and assistance for them, including by responding to inquiries, processing transactions or requests, and communicating with users (such as by sending service and account-related messages and updates);</li>
+                    <li>Developing, delivering, and improving the Better Game Services and other offerings, some of which may be offered in partnership with other parties;</li>
+                    <li>Personalizing your experience, including by presenting content or features better tailored to you or your interests, or our inferences about your interests (for instance, if you frequently play games in a certain genre, we may infer that you'd be interested in that genre and suggest similar games to you);</li>
+                    <li>Promoting the Better Game Services, including managing, customizing, and measuring the effectiveness of our advertisements, promotional offers, surveys, and events;</li>
+                    <li>Managing alpha, beta, or early access tests (and collecting feedback);</li>
+                    <li>Conducting data analytics (like analyzing how the Better Game Services are used so we can better understand, improve, and personalize them);</li>
+                    <li>Complying with our legal or contractual obligations and enforcing our terms; and</li>
+                    <li>Securing the Better Game Services, such as by detecting fraud and otherwise protecting Better Game and other users from illegal or harmful actions.</li>
+                </ul>
+                
+                <p class="mb-3">We may also process information that does not identify you individually, including aggregate or de-identified information that we create or collect from other sources. This information helps us better understand larger groups of users. If we combine this information with information that identifies you, we will treat it as described in this privacy policy. But please note that this privacy policy does not restrict our ability to process information that does not individually identify you, and we may use and disclose aggregated or de-identified information for any reason permitted by law.</p>
+                
+                <h3 class="mb-2">4. HOW DO WE SHARE INFORMATION?</h3>
+                <p class="mb-3">We may share some of the information we collect to help operate and improve the Better Game Services. Depending on how you interact with us, common examples might include sharing:</p>
+                
+                <ul class="mb-3">
+                    <li>With console and platform partners (for example, to facilitate gameplay when you access the Better Game Services through a third-party console provider);</li>
+                    <li>With other game developers (such as to enable features for games you acquire through the Better Game platform);</li>
+                    <li>With other users (like if you use social features such as chat);</li>
+                    <li>Publicly (for example, your display name, content you create or share, basic game statistics, and other similar information may be generally accessible to others);</li>
+                    <li>With service providers that operate on our behalf to help support the Better Game Services in accordance with our instructions (for example, cloud storage providers, payment processors, or marketing and advertising partners);</li>
+                    <li>When we believe we must in order to comply with the law or to protect you, Better Game, or others (for example, in response to a court order or subpoena, as part of an investigation of fraud or other illegal activity, or violation of our terms or policies, or if necessary to protect others from death or serious harm to body or property);</li>
+                    <li>With other Better Game entities (including to help provide support for the Better Game Services internationally);</li>
+                    <li>In connection with certain types of corporate transactions (like in the event of a restructuring or the sale of all or a significant part of our business); and</li>
+                    <li>With your permission (for example, if you link external accounts with your Better Game account, or use your Better Game account to sign in to third-party games and services or participate in cross-promotional events).</li>
+                </ul>
+                
+                <p class="mb-3">We may also share information that does not identify you with third parties, including aggregate or de-identified information.</p>
+            </div>
+            
+            <div class="p-3">
+                <h3 class="mb-2">5. CHILDREN'S PRIVACY</h3>
+                <p class="mb-3">If you are under the legal age of majority in your country of residence, you may use the Better Game Services only with the consent and under the supervision of your parent or legal guardian. We do not knowingly collect personal information from children under the age of 13 (or the age of digital consent in your region, whichever is higher) without parental consent. If we become aware that we have inadvertently collected personal information from a child under the age of 13 without parental consent, we will take steps to delete the information as soon as possible. Parents or guardians who believe that Better Game might have any information from or about a child under the age of 13 may submit a request to us as described in "Contact Us" below.</p>
+                
+                <h3 class="mb-2">6. YOUR CHOICES AND CONTROLS</h3>
+                <p class="mb-3">We seek to provide you with meaningful choices about the personal information we collect. The specific choices available to you often vary depending on the exact nature of our relationship with you, such as the Better Game Services you use. Common examples include:</p>
+                
+                <ul class="mb-3">
+                    <li><strong>Access, Correction, and Deletion:</strong> You can request that we provide access to, or that we correct or delete, personal information we've collected from you. Please submit requests to access, update, or delete personal information associated with your Better Game account by reaching out to us as described in "Contact Us" below. Note that we may ask you for additional information to help us verify who you are before completing your request.</li>
+                    <li><strong>Email Marketing Preferences:</strong> You can change your email marketing preferences at any time, such as by using the opt-out mechanism provided in our marketing emails, updating your Better Game account settings, or contacting us with your request (see "Contact Us" below).</li>
+                    <li><strong>Third-Party Privacy Settings:</strong> You can change your privacy settings on other parties' websites (such as social networks) or platforms (like console providers) to limit the information they may share with us.</li>
+                    <li><strong>Cookies and Tracking Technologies:</strong> You can change your browser or mobile device settings to block, manage, delete, or limit tracking technologies like cookies. In some cases, blocking or disabling cookies may cause the Better Game Services not to work as intended and some features may not be available.</li>
+                    <li><strong>Content Removal for Users Under 18:</strong> If you're under the age of 18 and have a Better Game account, you can ask that we remove or anonymize certain content you've provided on the Better Game Services. Please direct requests to help delete or edit content on the Better Game Services to Better Game as described in "Contact Us" below.</li>
+                </ul>
+                
+                <h3 class="mb-2">7. OUR GLOBAL OPERATIONS</h3>
+                <p class="mb-3">Better Game is based in Waikoloa, Hawaii, but we operate globally to help provide users all around the world with a better experience on the Better Game Services. We have subsidiaries, offices, service providers, and partners worldwide to support these operations in a number of different ways. This means that Better Game may process the information we collect in connection with your use of the Better Game Services in places outside the region where you reside.</p>
+                
+                <h4 class="mb-2">Data Transfers</h4>
+                <p class="mb-3">When you use the Better Game Services, your information may be transferred to or stored in the United States or other countries where we or our service providers operate. The data protection laws and rules in these countries may be different than those where you live. By using the Better Game Services, you authorize Better Game to process your information in any of the locations where we operate (including the United States).</p>
+                
+                <p class="mb-3">To learn more about the Better Game entity responsible for operating the Better Game Services you use, see "Contact Us" below.</p>
+                
+                <h3 class="mb-2">8. SECURITY</h3>
+                <p class="mb-3">We maintain appropriate administrative, technical, and physical safeguards to protect your personal information from accidental, unlawful, or unauthorized destruction, loss, alteration, access, disclosure, or use and other unlawful forms of processing. In some cases, your information is accessible when you log into a feature we offer, and in those cases you need to keep your user credentials and password confidential and secure so that your information is protected. If we become aware of unauthorized disclosure of your personal information, we will notify you as required by law and take steps to help secure your information.</p>
+            </div>
+            
+            <div class="p-3">
+                <h3 class="mb-2">9. UPDATES</h3>
+                <p class="mb-3">We'll update this policy from time to time to reflect changes in our practices or relevant laws. When we do, we'll change the date noted at the top of the policy. In some cases, we may also notify you of the relevant changes by email or within the Better Game Services. Please review this policy regularly to make sure that you understand your relationship with Better Game and the ways we may collect, use, and share information in connection with the Better Game Services.</p>
+                
+                <h3 class="mb-2">10. CONTACT US</h3>
+                <p class="mb-3">If you have questions or concerns about the Better Game Services (such as game-related issues, trouble accessing your Better Game account, bugs or other technical problems, payment matters, or content and entitlement issues), please contact me.</p>
+                
+                <p class="mb-3">Better Game can be reached by email at <a href="mailto:privacy@better.game" class="text-link">privacy@better.game</a>.</p>
+            </div>
+        </div>
+    </template>
+    
+    <template id="contact-template">
+        <div class="card">
+            <h2 class="card-header">Contact Me</h2>
+            
+            <form class="mb-4">
+                <div class="mb-3">
+                    <label for="name" class="d-block mb-1">Name</label>
+                    <input type="text" id="name" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="d-block mb-1">Email</label>
+                    <input type="email" id="email" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="subject" class="d-block mb-1">Subject</label>
+                    <select id="subject" class="form-control">
+                        <option>General Question</option>
+                        <option>Technical Support</option>
+                        <option>Billing</option>
+                        <option>Report a Bug</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="message" class="d-block mb-1">Message</label>
+                    <textarea id="message" class="form-control" rows="5"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Send Message</button>
+            </form>
+             
+            <div class="card mb-4">
+                <h3 class="card-header">Other Ways to Reach Me</h3>
+                <div class="row">
+                    <div class="col-50 col-md-100 p-3">
+                        <h4 class="mb-2">Contact Directly</h4>
+                        <p class="mb-3">If you need anything, you can reach us through:</p>
+                        <ul class="mb-0">
+                            <li class="mb-2">Email: <a href="mailto:hi@better.game" class="text-link">hi@better.game</a></li>
+                            <li class="mb-2">Discord: <a href="https://better.game/discord" class="text-link">Join our Discord server</a></li>
+                            <li class="mb-2">Chat: Type in the chat for immediate assistance</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="col-50 col-md-100 p-3">
+                        <h4 class="mb-2">Social Media</h4>
+                        <p class="mb-3">Follow on your favorite platforms:</p>
+                        <ul class="mb-0">
+                            <li class="mb-2">YouTube: <a href="https://youtube.com/@better_dotgame" class="text-link" target="_blank">@better_dotgame</a></li>
+                            <li class="mb-2">TikTok: <a href="https://tiktok.com/@better_dotgame" class="text-link" target="_blank">@better_dotgame</a></li>
+                            <li class="mb-2">X: <a href="https://x.com/better_dotgame" class="text-link" target="_blank">@better_dotgame</a></li>
+                            <li class="mb-2">Instagram: <a href="https://instagram.com/better_dotgame" class="text-link" target="_blank">@better_dotgame</a></li>
+                            <li class="mb-2">RedNote: <a href="https://www.xiaohongshu.com/user/profile/67870411000000000801b5e2" class="text-link" target="_blank">@better_dotgame</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    
+    <template id="copyright-template">
+        <div class="card">
+            <h2 class="card-header">Copyright Information</h2>
+            <p class="mb-3">© Copyright 2024-present</p>
+            <p class="mb-3"><a href="mailto:me@nathants.com" class="text-link">me@nathants.com</a></p>
+            <p class="mb-3">All rights reserved.</p>
+            
+            <h3 class="mb-2">Copyright Protection</h3>
+            <p class="mb-3">All content, including but not limited to game assets, code, and documentation is protected by copyright law.</p>
+            
+            <h3 class="mb-2">Trademarks</h3>
+            <p class="mb-3">All trademarks appearing on our game and website are the property of their respective owners.</p>
+            
+            <h3 class="mb-2">Content Usage</h3>
+            <p>Content may not be reproduced, distributed, or used for commercial purposes without explicit permission.</p>
+        </div>
+    </template>
+</body>
+</html> 
